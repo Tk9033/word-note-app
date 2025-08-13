@@ -1,0 +1,8 @@
+<div id="<%= dom_id deck %>" class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center transition-shadow hover:shadow-lg">
+  <h5 class="text-xl font-semibold text-gray-700 mb-0"><%= deck.name %></h5>
+  <div class="flex items-center space-x-2">
+    <%= link_to t('helpers.links.show'), deck, class: 'px-3 py-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors' %>
+    <%= link_to t('helpers.links.edit'), edit_deck_path(deck), class: 'px-3 py-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors' %>
+    <%= button_to t('helpers.links.destroy'), deck, method: :delete, data: { turbo_confirm: t('helpers.confirmations.destroy') }, class: 'px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors' %>
+  </div>
+</div>

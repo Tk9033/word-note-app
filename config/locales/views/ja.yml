@@ -1,0 +1,18 @@
+ja:
+  helpers:
+    submit:
+      create: 登録
+      submit: 保存
+      update: 更新
+    links:
+      show: "詳細"
+      edit: "編集"
+      destroy: "削除"
+    confirmations:
+      destroy: "本当に削除しますか？"
+  decks:
+    index:
+      title: "単語帳一覧"
+      new_deck: "新しい単語帳を作成"
+      no_decks: "まだ単語帳がありません"
+      create_first: "最初の単語帳を作成する"

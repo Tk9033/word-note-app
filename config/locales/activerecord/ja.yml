@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    models:
+      deck: 単語帳
+    attributes:
+      deck:
+        name: 単語帳名
