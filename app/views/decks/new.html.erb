@@ -1,0 +1,10 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-gray-800"><%= t('.title') %></h1>
+      <%= link_to t('.back_to_decks'),decks_path, class: "text-blue-500 hover:text-blue-800" %>
+    </div>
+
+    <%= render "form", deck: @deck %>
+  </div>
+</div>
