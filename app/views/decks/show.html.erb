@@ -12,18 +12,23 @@
       </div>
     </div>
 
-    <%# フラッシュメッセージの表示 %>
-    <% if notice %>
-      <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-md" role="alert">
-        <p><%= notice %></p>
-      </div>
-    <% end %>
-
     <%# 単語カード一覧を表示するエリア %>
-    <div class="bg-white shadow-md rounded-lg p-8">
-      <h2 class="text-2xl font-semibold text-gray-700 mb-4">単語カード一覧</h2>
-      <p class="text-gray-500">ここに単語が表示されます。</p>
-      <%# TODO: 単語カードのロジックをここに追加 %>
+    <div class="bg-white shadow-md rounded-lg p-6 mt-8">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-semibold text-gray-700"><%= t('.cards_title') %></h2>
+        <%= link_to t('.new_card'), new_deck_card_path(@deck), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
+      </div>
+
+      <% if @cards.any? %>
+        <div id="cards" class="space-y-4">
+          <%= render @cards %>
+        </div>
+      <% else %>
+        <div class="text-center bg-gray-50 p-10 rounded-lg border border-dashed">
+          <p class="text-gray-600 mb-4"><%= t('.no_cards') %></p>
+          <%= link_to t('.create_first_card'), new_deck_card_path(@deck), class: "inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

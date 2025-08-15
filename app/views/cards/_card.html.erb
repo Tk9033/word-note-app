@@ -1,0 +1,16 @@
+<div id="<%= dom_id card %>" class="bg-gray-50 border border-gray-200 rounded-lg p-4 transition-shadow hover:shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <p class="text-sm font-semibold text-gray-500 mb-1"><%= Card.human_attribute_name(:question) %></p>
+      <div class="text-gray-800 prose max-w-none"><%= simple_format(card.question, {}, wrapper_tag: "div") %></div>
+    </div>
+    <div>
+      <p class="text-sm font-semibold text-gray-500 mb-1"><%= Card.human_attribute_name(:answer) %></p>
+      <div class="text-gray-800 prose max-w-none"><%= simple_format(card.answer, {}, wrapper_tag: "div") %></div>
+    </div>
+  </div>
+  <div class="mt-4 pt-4 border-t border-gray-200 flex justify-end space-x-2">
+    <%= link_to t('helpers.links.edit'), edit_deck_card_path(card.deck, card), class: 'px-3 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors' %>
+    <%= button_to t('helpers.links.destroy'), deck_card_path(card.deck, card), method: :delete, data: { turbo_confirm: t('helpers.confirmations.destroy') }, class: 'px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors' %>
+  </div>
+</div>
