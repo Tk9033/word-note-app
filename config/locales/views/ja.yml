@@ -24,9 +24,32 @@ ja:
       edit_deck: "この単語帳を編集"
       destroy_deck: "単語帳を削除する"
       back_to_decks: "単語帳一覧に戻る"
+      cards_title: "単語カード一覧"
+      new_card: "新しいカードを追加"
+      no_cards: "まだカードが登録されていません。"
+      create_first_card: "最初のカードを作成する"
     edit:
       title: "単語帳を編集"
       back_to_deck: "単語帳に戻る"
+    create:
+      success: "単語帳が作成されました。"
+    update:
+      success: "単語帳が更新されました。"
+    destroy:
+      success: "単語帳が削除されました。"
+  cards:
+    new:
+      title: "新しいカードを作成"
+      back_to_deck: "単語帳に戻る"
+    edit:
+      title: "カードを編集"
+      back_to_deck: "単語帳に戻る"
+    create:
+      success: "単語カードが作成されました。"
+    update:
+      success: "単語カードが更新されました。"
+    destroy:
+      success: "単語カードが削除されました。"
   errors:
     template:
       header:

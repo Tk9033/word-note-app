@@ -2,11 +2,12 @@ class DecksController < ApplicationController
   before_action :set_deck, only: %i[show edit update destroy]
 
   def index
-    @decks = Deck.all
+    @decks = Deck.all.includes(:cards)
   end
 
   def show
-    # @deck is set by before_action
+    # @deckはbefore_actionでセット済み
+    @cards = @deck.cards.order(created_at: :desc)
   end
 
   def new
@@ -14,14 +15,14 @@ class DecksController < ApplicationController
   end
 
   def edit
-    # @deck is set by before_action
+    # @deckはbefore_actionでセット済み
   end
 
   def create
     @deck = Deck.new(deck_params)
 
     if @deck.save
-      redirect_to @deck, notice: "単語帳が作成されました。"
+      redirect_to @deck, notice: t(".success")
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +30,7 @@ class DecksController < ApplicationController
 
   def update
     if @deck.update(deck_params)
-      redirect_to @deck, notice: "単語帳が更新されました。"
+      redirect_to @deck, notice: t(".success")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -37,7 +38,7 @@ class DecksController < ApplicationController
 
   def destroy
     @deck.destroy
-    redirect_to decks_url, notice: "単語帳が削除されました。", status: :see_other
+    redirect_to decks_url, notice: t(".success"), status: :see_other
   end
 
   private
