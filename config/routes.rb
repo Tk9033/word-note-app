@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   # root "posts#index"
   resources :decks do
-    resources :cards, only: [:new, :create]
+    resources :cards, only: [ :new, :create ]
   end
-  resources :cards, only: [:edit, :update, :destroy]
+  resources :cards, only: [ :edit, :update, :destroy ]
 end

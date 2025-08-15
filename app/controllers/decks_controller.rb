@@ -13,7 +13,7 @@ class DecksController < ApplicationController
   def new
     @deck = Deck.new
   end
-  
+
   def edit
     # @deckはbefore_actionでセット済み
   end
