@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deck: one
+  status: 1
+  started_at: 2025-08-16 05:57:33
+  completed_at: 2025-08-16 05:57:33
+
+two:
+  deck: two
+  status: 1
+  started_at: 2025-08-16 05:57:33
+  completed_at: 2025-08-16 05:57:33

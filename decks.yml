@@ -1,0 +1,4 @@
+  def setup
+    @deck = decks(:one)
+    @card = @deck.cards.build(question: "What is Rails?", answer: "A web framework.")
+  end
