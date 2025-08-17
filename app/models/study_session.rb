@@ -3,7 +3,7 @@ class StudySession < ApplicationRecord
   has_many :study_results, dependent: :destroy
   has_many :answered_cards, through: :study_results, source: :card
 
-  enum status: { in_progress:0, completed: 1 }
+  enum status: { in_progress: 0, completed: 1 }
 
   before_validation :set_card_order, on: :create
 
@@ -51,6 +51,8 @@ class StudySession < ApplicationRecord
 
   def set_card_order
     # self.card_orderがまだ設定されていない場合のみ、deckの全カードIDをシャッフルして設定
-    self.card_order = deck.card_ids.shuffle if card_order.empty?
+    if card_order.blank?
+      self.card_order = deck.card_ids.shuffle
+    end
   end
 end

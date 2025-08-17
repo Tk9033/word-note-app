@@ -12,6 +12,11 @@
       </div>
     </div>
 
+    <%# 学習開始ボタン %>
+    <div class="mt-6 text-center">
+      <%= button_to "この単語帳で学習する", deck_study_sessions_path(@deck), method: :post, class: "btn btn-primary btn-wide" %>
+    </div>
+
     <%# 単語カード一覧を表示するエリア %>
     <div class="bg-white shadow-md rounded-lg p-6 mt-8">
       <div class="flex justify-between items-center mb-4">

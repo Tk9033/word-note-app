@@ -8,5 +8,4 @@ class CreateCards < ActiveRecord::Migration[7.2]
       t.timestamps null: false
     end
   end
-
 end

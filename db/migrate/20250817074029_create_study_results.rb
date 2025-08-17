@@ -10,7 +10,6 @@ class CreateStudyResults < ActiveRecord::Migration[7.2]
     end
 
 
-    add_index :study_results, [:study_session_id, :card_id], unique: true
-
+    add_index :study_results, [ :study_session_id, :card_id ], unique: true
   end
 end

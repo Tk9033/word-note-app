@@ -5,13 +5,12 @@ class StudySessionsController < ApplicationController
   # セッション作成
   def create
     if @deck.cards.empty?
-      redirect_to deck_path(@deck), alert: "このフォルダにはカードがありません。カードを追加してください。"
+      redirect_to deck_path(@deck), alert: "このフォルダにはカードがありません。"
       return
     end
 
     @session = @deck.study_sessions.create!(
       status: :in_progress,
-      card_order: @deck.card_ids.shuffle,
       current_index: 0
     )
     redirect_to deck_study_session_path(@deck, @session)
@@ -23,6 +22,7 @@ class StudySessionsController < ApplicationController
       return redirect_to result_deck_study_session_path(@deck, @session)
     end
     @card = @session.current_card
+    @reveal = ActiveModel::Type::Boolean.new.cast(params[:reveal])
   end
 
   # 解答
