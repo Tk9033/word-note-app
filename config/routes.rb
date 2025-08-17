@@ -15,6 +15,17 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :decks do
     resources :cards, only: [ :new, :create ]
+    # POST /decks/:deck_id/study_sessions
+    # GET  /decks/:deck_id/study_sessions/:id
+    # ...
+    resources :study_sessions, only: [:create, :show] do
+      member do
+        patch :answer
+        patch :back
+        get :result
+        post :retry_wrong
+      end
+    end
   end
   resources :cards, only: [ :edit, :update, :destroy ]
 end
