@@ -50,6 +50,27 @@ ja:
       success: "単語カードが更新されました。"
     destroy:
       success: "単語カードが削除されました。"
+  study_sessions:
+    create:
+      no_cards: "このフォルダにはカードがありません。"
+      success: "学習を開始します！"
+    answer:
+      answer_failed: "回答の保存に失敗しました。 もう一度お試しください。"
+    result:
+      all_correct: "全問正解！おめでとう！"
+      title: "学習結果"
+      answered_count: "解答数"
+      correct_count: "正解数"
+      correct_rate: "正解率"
+      wrong_questions_title: "間違えた問題"
+      question_label: "問題:"
+      answer_label: "答え:"
+      retry_button: "間違えた問題だけ再挑戦"
+      back_to_decks_button: "単語帳一覧へ"
+      back_to_deck_button: "この単語帳に戻る"
+    retry_wrong:
+      no_wrong_answers: "不正解はありません。"
+      retry_start: "間違えた問題で再挑戦を開始します！"
   errors:
     template:
       header:
