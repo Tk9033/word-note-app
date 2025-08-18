@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_12_120145) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_17_074029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,5 +30,31 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_12_120145) do
     t.index ["name"], name: "index_decks_on_name", unique: true
   end
 
+  create_table "study_results", force: :cascade do |t|
+    t.bigint "study_session_id", null: false
+    t.bigint "card_id", null: false
+    t.boolean "correct", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_study_results_on_card_id"
+    t.index ["study_session_id", "card_id"], name: "index_study_results_on_study_session_id_and_card_id", unique: true
+    t.index ["study_session_id"], name: "index_study_results_on_study_session_id"
+  end
+
+  create_table "study_sessions", force: :cascade do |t|
+    t.bigint "deck_id", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "current_index", default: 0, null: false
+    t.integer "card_order", default: [], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["current_index"], name: "index_study_sessions_on_current_index"
+    t.index ["deck_id"], name: "index_study_sessions_on_deck_id"
+    t.index ["status"], name: "index_study_sessions_on_status"
+  end
+
   add_foreign_key "cards", "decks"
+  add_foreign_key "study_results", "cards", on_delete: :cascade
+  add_foreign_key "study_results", "study_sessions", on_delete: :cascade
+  add_foreign_key "study_sessions", "decks", on_delete: :cascade
 end

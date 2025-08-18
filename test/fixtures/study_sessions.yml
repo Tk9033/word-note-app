@@ -1,7 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: DeckOne
+  deck: one
+  status: 1
 
 two:
-  name: DeckTwo
+  deck: two
+  status: 1
