@@ -11,7 +11,7 @@
         <div class="stat-title">正解率</div>
         <div class="stat-value text-success"><%= @correct_count %></div>
       </div>
-    </div class="stat">
+    <div class="stat">
       <div class="stat-title">正解率</div>
       <div class="stat-value"><%= number_to_percentage(@correct_count.to_f / @answered * 100, precision: 0) if @answered > 0 %></div>
     </div>
@@ -29,9 +29,15 @@
         </div>
       <% end %>
     </div>
-
-    <div class="mt-8>
-      <%= link_to "間違えた問題だけ再挑戦", retry_wrong_deck_study_session_path(@deck, @session), method: :post, class: "btn btn-warning" %>
-    </div>
   <% end %>
+
+    <% if @wrong_results.present? %>
+      <div class="mt-8">
+        <%= button_to "間違えた問題にもう１度挑戦!!",
+              retry_wrong_deck_study_session_path(@deck, @session),
+              method: :post,
+              class: "btn btn-warning" %>
+      </div>
+    <% end %>
+  </div>
 </div>

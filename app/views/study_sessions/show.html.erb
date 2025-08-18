@@ -3,10 +3,10 @@
     <%# プログレスバー %>
     <div class="mb-4">
       <p class="text-sm text-gray-600 text-right">
-        <%= @session.current_index + 1 %> / <%= @session.current_index + 1 %>
+        <%= @session.current_index + 1 %> / <%= @session.card_order.size %>
       </p>
 
-    <%# 質問カード %>
+    <%# 問題 %>
     <div class="card bg-base-100 shadow-xl mb-6 min-h-32">
     <div class="card-body">
         <h2 class="card-title">問題</h2>
@@ -14,16 +14,16 @@
     </div>
     </div>
 
-    <%# 答え アクションボタン %>
+    <%# 答え  %>
     <% if @reveal %>
-    <div class="card bg -base-100 shadow-xl min-h-32">
+    <div class="card bg-base-100 shadow-xl min-h-32">
         <div class="card-body">
         <h2 class="card-title">答え</h2>
         <p class="text-lg whitespace-pre-wrap"><%= @card.answer %></p>
         </div>
     </div>
 
-    <%= form_with(model: @session, url: answer_deck_study_session_path(@deck, @session), method: :patch, class: "mt-6 flex justify-center gap-4") do |f| %>
+    <%= form_with(model: @session, url: answer_deck_study_session_path(@deck, @session), method: :post, class: "mt-6 flex justify-center gap-4") do |f| %>
       <%= hidden_field_tag :card_id, @card.id %>
       <%= f.submit "不正解", name: "correct", value: false, class: "btn btn-error" %>
       <%= f.submit "正解", name: "correct", value: true, class: "btn btn-success" %>
@@ -37,9 +37,9 @@
     <%# ナビゲーション %>
     <div class="mt-8 flex justify-between">
         <% if @session.current_index > 0 %>
-        <%= button_to "前の問題へ", back_deck_study_session_path(@deck, @session), method: :patch, class: "btn btn-ghost" %>
+        <%= button_to "前の問題へ", back_deck_study_session_path(@deck, @session), method: :post, class: "btn btn-ghost" %>
         <% else %>
-        <div></div> <%# to keep the "justify-between" layout %>
+        <div></div>
         <% end %>
         <%= link_to "結果を見る", result_deck_study_session_path(@deck, @session), class: "btn btn-outline" %>
     </div>
