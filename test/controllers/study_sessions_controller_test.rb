@@ -1,7 +1,6 @@
 require "test_helper"
 
 class StudySessionsControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     @deck = decks(:one)
   end
