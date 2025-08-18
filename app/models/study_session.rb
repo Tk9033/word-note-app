@@ -3,7 +3,7 @@ class StudySession < ApplicationRecord
   has_many :study_results, dependent: :destroy
   has_many :answered_cards, through: :study_results, source: :card
 
-  enum status: { in_progress: 0, completed: 1 }
+  enum :status, { in_progress: 0, completed: 1 }
 
   before_validation :set_card_order, on: :create
 

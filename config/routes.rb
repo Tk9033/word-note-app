@@ -20,8 +20,8 @@ Rails.application.routes.draw do
     # ...
     resources :study_sessions, only: [ :create, :show ] do
       member do
-        patch :answer
-        patch :back
+        post :answer
+        post :back
         get :result
         post :retry_wrong
       end

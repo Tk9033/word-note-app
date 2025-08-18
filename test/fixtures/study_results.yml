@@ -3,11 +3,9 @@
 one:
   study_session: one
   card: one
-  correct: false
-  answered_at: 2025-08-16 05:59:05
+  correct: true
 
 two:
   study_session: two
   card: two
   correct: false
-  answered_at: 2025-08-16 05:59:05
