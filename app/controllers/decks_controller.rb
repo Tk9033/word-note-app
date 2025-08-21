@@ -37,7 +37,7 @@ class DecksController < ApplicationController
   end
 
   def destroy
-    @deck.destroy
+    @deck.destroy!
     redirect_to decks_url, notice: t(".success"), status: :see_other
   end
 

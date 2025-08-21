@@ -26,7 +26,7 @@ class StudySessionsController < ApplicationController
 
   # 解答
   def answer
-    card = @session.deck.cards.find { |c| c.id == params[:card_id].to_i }
+    card = @session.deck.cards.find(params[:card_id])
 
     correct = ActiveModel::Type::Boolean.new.cast(params[:correct])
     unless @session.record_and_advance!(card: card, correct: correct)

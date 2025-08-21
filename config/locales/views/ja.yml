@@ -14,29 +14,29 @@ ja:
     index:
       title: "単語帳一覧"
       new_deck: "新しい単語帳を作成"
-      no_decks: "まだ単語帳がありません"
+      no_decks: "単語帳はまだありません"
       create_first: "最初の単語帳を作成する"
     new:
       title: "新しい単語帳"
       back_to_decks: "単語帳一覧に戻る"
     show:
       title: "単語帳"
-      edit_deck: "この単語帳を編集"
+      edit_deck: "単語帳を編集"
       destroy_deck: "単語帳を削除する"
       back_to_decks: "単語帳一覧に戻る"
       cards_title: "単語カード一覧"
       new_card: "新しいカードを追加"
-      no_cards: "まだカードが登録されていません。"
+      no_cards: "まだカードがありません"
       create_first_card: "最初のカードを作成する"
     edit:
       title: "単語帳を編集"
       back_to_deck: "単語帳に戻る"
     create:
-      success: "単語帳が作成されました。"
+      success: "単語帳を作成しました"
     update:
-      success: "単語帳が更新されました。"
+      success: "単語帳を更新しました"
     destroy:
-      success: "単語帳が削除されました。"
+      success: "単語帳を削除しました"
   cards:
     new:
       title: "新しいカードを作成"
@@ -45,17 +45,26 @@ ja:
       title: "カードを編集"
       back_to_deck: "単語帳に戻る"
     create:
-      success: "単語カードが作成されました。"
+      success: "カードを追加しました"
     update:
-      success: "単語カードが更新されました。"
+      success: "カードを更新しました"
     destroy:
-      success: "単語カードが削除されました。"
+      success: "カードを削除しました"
   study_sessions:
     create:
-      no_cards: "このフォルダにはカードがありません。"
+      no_cards: "この単語帳にはカードがありません"
       success: "学習を開始します！"
     answer:
-      answer_failed: "回答の保存に失敗しました。 もう一度お試しください。"
+      answer_failed: "回答を保存できませんでした。 もう一度お試しください。"
+    show:
+      progress_status: "%{current} / %{total}"
+      question_title: "問題"
+      answer_title: "答え"
+      correct_button: "わかった！"
+      incorrect_button: "わからなかった"
+      reveal_button: "答えを確認する"
+      back_button: "前の問題へ戻る"
+      result_button: "結果を確認"
     result:
       all_correct: "全問正解！おめでとう！"
       title: "学習結果"
@@ -65,14 +74,9 @@ ja:
       wrong_questions_title: "間違えた問題"
       question_label: "問題:"
       answer_label: "答え:"
-      retry_button: "間違えた問題だけ再挑戦"
+      retry_button: "間違えた問題をやり直す"
       back_to_decks_button: "単語帳一覧へ"
       back_to_deck_button: "この単語帳に戻る"
     retry_wrong:
-      no_wrong_answers: "不正解はありません。"
+      no_wrong_answers: "すべて正解でした！"
       retry_start: "間違えた問題で再挑戦を開始します！"
-  errors:
-    template:
-      header:
-        one: "1個のエラーにより、この%{model}を保存できませんでした:"
-        other: "%{count}個のエラーにより、この%{model}を保存できませんでした:"
