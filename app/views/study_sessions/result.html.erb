@@ -1,37 +1,43 @@
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-2xl mx-auto text-center">
-    <h1 class="text-3xl font-bold mb-4">学習結果</h1>
+    <h1 class="text-3xl font-bold mb-4"><%= t('.title') %></h1>
 
     <div class="stats shadow mb-6">
       <div class="stat">
-        <div class="stat-title">解答数</div>
+        <div class="stat-title"><%= t('.answered_count') %></div>
         <div class="stat-value"><%= @answered %> / <%= @total %></div>
       </div>
       <div class="stat">
-        <div class="stat-title">正解率</div>
+        <div class="stat-title"><%= t('.correct_count') %></div>
         <div class="stat-value text-success"><%= @correct_count %></div>
       </div>
-    </div class="stat">
-      <div class="stat-title">正解率</div>
-      <div class="stat-value"><%= number_to_percentage(@correct_count.to_f / @answered * 100, precision: 0) if @answered > 0 %></div>
+      <div class="stat">
+        <div class="stat-title"><%= t('.correct_rate') %></div>
+        <div class="stat-value"><%= number_to_percentage(@correct_count.to_f / @answered * 100, precision: 0) if @answered > 0 %></div>
+      </div>
+    </div>
+
+    <% if @wrong_results.any? %>
+      <h2 class="text-2xl font-semibold my-6"><%= t('.wrong_questions_title') %></h2>
+      <div class="text-left space-y-4">
+        <% @wrong_results.each do |result| %>
+          <div class="card bg-base-100 shadow-md">
+            <div class="card-body">
+              <p class="font-semibold"><%= t('.question_label') %> <%= result.card.question %></p>
+              <p><%= t('.answer_label') %> <%= result.card.answer %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-8">
+        <%= button_to t('.retry_button'), retry_wrong_deck_study_session_path(@deck, @session), method: :post, class: "btn btn-warning" %>
+      </div>
+    <% end %>
+
+    <div class="mt-8 flex justify-center gap-4">
+      <%= link_to t('.back_to_decks_button'), decks_path, class: "btn" %>
+      <%= link_to t('.back_to_deck_button'), deck_path(@deck), class: "btn btn-primary" %>
     </div>
   </div>
-
-  <% if @wrong_results.any? %>
-    <h2 class="text-2xl font-bold mb-4">間違えた問題</h2>
-    <div class="text-left space-y-4">
-      <% @wrong_results.each do |result| %>
-        <div class="card bg-base-100 shadow-md">
-          <div class="card-body">
-            <p class="font-semibold">問題: <%= result.card.question %></p>
-            <p>答え: <%= result.card.answer %></p>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="mt-8>
-      <%= link_to "間違えた問題だけ再挑戦", retry_wrong_deck_study_session_path(@deck, @session), method: :post, class: "btn btn-warning" %>
-    </div>
-  <% end %>
 </div>

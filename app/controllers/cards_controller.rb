@@ -29,7 +29,7 @@ class CardsController < ApplicationController
   end
 
   def destroy
-    @card.destroy
+    @card.destroy!
     redirect_to @deck, notice: t(".success"), status: :see_other
   end
 

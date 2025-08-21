@@ -5,15 +5,14 @@ class StudySessionsController < ApplicationController
   # セッション作成
   def create
     if @deck.cards.empty?
-      redirect_to deck_path(@deck), alert: "このフォルダにはカードがありません。"
+      redirect_to deck_path(@deck), alert: t(".no_cards")
       return
     end
 
-    @session = @deck.study_sessions.create!(
-      status: :in_progress,
-      current_index: 0
-    )
-    redirect_to deck_study_session_path(@deck, @session)
+    @deck.study_sessions.where(status: :in_progress).destroy_all
+
+    @session = @deck.study_sessions.create!
+    redirect_to deck_study_session_path(@deck, @session), notice: t(".success")
   end
 
   # 問題表示
@@ -27,12 +26,11 @@ class StudySessionsController < ApplicationController
 
   # 解答
   def answer
-    # @session.deck.cards は set_session で事前読み込み済みのため、DB問い合わせが発生しない
-    card = @session.deck.cards.find { |c| c.id == params[:card_id].to_i }
+    card = @session.deck.cards.find(params[:card_id])
 
     correct = ActiveModel::Type::Boolean.new.cast(params[:correct])
     unless @session.record_and_advance!(card: card, correct: correct)
-      flash[:alert] = "回答の保存に失敗しました。 もう一度お試しください。"
+      flash[:alert] = t(".answer_failed")
       return redirect_to deck_study_session_path(@deck, @session)
     end
 
@@ -54,7 +52,7 @@ class StudySessionsController < ApplicationController
     @wrong_results = results.reject(&:correct)
 
     if @session.finished? && @correct_count == @total && @total.positive?
-      flash.now[:notice] = "全問正解！おめでとう！"
+      flash.now[:notice] = t(".all_correct")
     end
   end
 
@@ -64,7 +62,7 @@ class StudySessionsController < ApplicationController
 
     if wrong_ids.empty?
       return redirect_to result_deck_study_session_path(@deck, @session),
-      notice: "不正解はありません。"
+      notice: t(".no_wrong_answers")
     end
 
     new_session = @deck.study_sessions.create!(
@@ -73,7 +71,7 @@ class StudySessionsController < ApplicationController
       current_index: 0
     )
 
-    redirect_to deck_study_session_path(@deck, new_session)
+    redirect_to deck_study_session_path(@deck, new_session), notice: t(".retry_start")
   end
 
   private

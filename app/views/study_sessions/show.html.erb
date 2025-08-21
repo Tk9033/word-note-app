@@ -1,47 +1,48 @@
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-2xl mx-auto">
-    <%# プログレスバー %>
+    <%# 進捗状況を確認 %>
     <div class="mb-4">
-      <p class="text-sm text-gray-600 text-right">
-        <%= @session.current_index + 1 %> / <%= @session.current_index + 1 %>
-      </p>
+      <p class="text-sm text-gray-600 text-right"><%= t('.progress_status', current: @session.current_index + 1, total: @session.card_order.size) %></p>
+      <progress class="progress progress-primary w-full" value="<%= @session.current_index + 1 %>" max="<%= @session.card_order.size %>"></progress>
+    </div>
 
-    <%# 質問カード %>
+    <%# 問題 %>
     <div class="card bg-base-100 shadow-xl mb-6 min-h-32">
     <div class="card-body">
-        <h2 class="card-title">問題</h2>
+        <h2 class="card-title"><%= t('.question_title') %></h2>
         <p class="text-lg whitespace-pre-wrap"><%= @card.question %></p>
     </div>
     </div>
 
-    <%# 答え アクションボタン %>
+    <%# 答え  %>
     <% if @reveal %>
-    <div class="card bg -base-100 shadow-xl min-h-32">
+    <div class="card bg-base-100 shadow-xl min-h-32">
         <div class="card-body">
-        <h2 class="card-title">答え</h2>
+        <h2 class="card-title"><%= t('.answer_title') %></h2>
         <p class="text-lg whitespace-pre-wrap"><%= @card.answer %></p>
         </div>
     </div>
 
-    <%= form_with(model: @session, url: answer_deck_study_session_path(@deck, @session), method: :patch, class: "mt-6 flex justify-center gap-4") do |f| %>
+    <%= form_with(model: @session, url: answer_deck_study_session_path(@deck, @session), method: :post, class: "mt-6 flex justify-center gap-4") do |f| %>
       <%= hidden_field_tag :card_id, @card.id %>
-      <%= f.submit "不正解", name: "correct", value: false, class: "btn btn-error" %>
-      <%= f.submit "正解", name: "correct", value: true, class: "btn btn-success" %>
+      <%= f.button t('.correct_button'), name: "correct", value: true, class: "btn btn-success" %>
+      <%= f.button t('.incorrect_button'), name: "correct", value: false, class: "btn btn-error" %>
+      <%= f.button t('.correct_button'), name: "correct", value: true, class: "btn btn-success" %>
     <% end %>
   <% else %>
     <div class="text-center">
-      <%= link_to "答えを見る", deck_study_session_path(@deck, @session, reveal: true), class: "btn btn-primary" %>
+      <%= link_to t('.reveal_button'), deck_study_session_path(@deck, @session, reveal: true), class: "btn btn-primary" %>
     </div>
   <% end %>
 
     <%# ナビゲーション %>
     <div class="mt-8 flex justify-between">
         <% if @session.current_index > 0 %>
-        <%= button_to "前の問題へ", back_deck_study_session_path(@deck, @session), method: :patch, class: "btn btn-ghost" %>
+        <%= button_to t('.back_button'), back_deck_study_session_path(@deck, @session), method: :post, class: "btn btn-ghost" %>
         <% else %>
-        <div></div> <%# to keep the "justify-between" layout %>
+        <div></div>
         <% end %>
-        <%= link_to "結果を見る", result_deck_study_session_path(@deck, @session), class: "btn btn-outline" %>
+        <%= link_to t('.result_button'), result_deck_study_session_path(@deck, @session), class: "btn btn-outline" %>
     </div>
   </div>
 </div>

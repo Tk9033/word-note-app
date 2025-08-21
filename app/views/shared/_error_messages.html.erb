@@ -1,0 +1,17 @@
+<% if object.errors.any? %>
+  <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+    <ul class="list-disc list-inside text-sm">
+      <% object.errors.each do |error| %>
+        <% attr = error.attribute %>
+        <% msg  = error.message.to_s %>
+        <% type = error.type %>
+
+        <% if attr == :question && type == :taken %>
+          <li>この問題はすでに登録されています</li>
+        <% else %>
+          <li><%= object.errors.full_message(attr, msg) %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
