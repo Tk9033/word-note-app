@@ -46,11 +46,10 @@ class StudySessionsController < ApplicationController
   # 結果表示
   def result
     @total = @session.card_order.size
-    results_relation = @session.study_results
-
-    @answered = results_relation.count
-    @correct_count = results_relation.where(correct: true).count
-    @wrong_results = results_relation.where(correct: false).includes(:card)
+    results = @session.study_results.includes(:card).to_a
+    @answered = results.size
+    @correct_count = results.count(&:correct)
+    @wrong_results = results.reject(&:correct)
 
     if @session.finished? && @correct_count == @total && @total.positive?
       flash.now[:notice] = t(".all_correct")
