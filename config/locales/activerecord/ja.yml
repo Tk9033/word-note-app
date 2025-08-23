@@ -14,10 +14,14 @@ ja:
         card:
           attributes:
             question:
+              # The ^ character tells Rails to use this message as-is,
+              # without prepending the attribute name ("問題").
               taken: "この問題はすでに登録されています"
-  errors: # このブロックを ja: の中にインデントします
+  errors:
+    # This is the global format for error messages.
     format: "%{attribute}%{message}"
     messages:
+      # This is the message for presence validation (e.g., validates :name, presence: true)
       blank: "を入力してください"
       taken: "はすでに存在します"
       too_long: "は%{count}文字以内で入力してください"

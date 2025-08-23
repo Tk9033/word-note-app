@@ -3,15 +3,8 @@
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-3xl font-bold text-gray-800"><%= t('.title') %></h1>
 
-      <div class="flex items-center gap-3">
-        <%# 新規作成ボタン %>
-        <%= link_to t('.new_deck'), new_deck_path, class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
-
-        <% if logged_in? %>
-          <%= button_to t('.logout'), logout_path, method: :delete,
-                class: "inline-block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
-        <% end %>
-      </div>
+      <%# 新規作成ボタン %>
+      <%= link_to t('.new_deck'), new_deck_path, class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
     </div>
 
     <% if @decks.any? %>

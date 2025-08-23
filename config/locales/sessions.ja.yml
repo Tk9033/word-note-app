@@ -1,5 +1,0 @@
-ja:
-  auth:
-    logged_in: "ログインしました"
-    logged_out: "ログアウトしました"
-    invalid_credentials: "メールアドレスまたはパスワードが正しくありません"
