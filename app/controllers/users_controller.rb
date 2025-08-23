@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
    if @sign_up_form.invalid?
     return render :new, status: :unprocessable_entity
-  end
+   end
 
   user = User.new(
     name: @sign_up_form.name,
