@@ -16,6 +16,7 @@ ja:
       new_deck: "新しい単語帳を作成"
       no_decks: "単語帳はまだありません"
       create_first: "最初の単語帳を作成する"
+      logout: "ログアウト"
     new:
       title: "新しい単語帳"
       back_to_decks: "単語帳一覧に戻る"
@@ -80,3 +81,13 @@ ja:
     retry_wrong:
       no_wrong_answers: "すべて正解でした！"
       retry_start: "間違えた問題で再挑戦を開始します！"
+  users:
+    new:
+      title: "サインアップ"
+      submit: "登録"
+      back_to_login: "ログインへ戻る"
+  sessions:
+    new:
+      title: "ログイン"
+      submit: "ログイン"
+      back_to_signup: "サインアップへ"
