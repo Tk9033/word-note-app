@@ -51,6 +51,8 @@ ja:
     destroy:
       success: "カードを削除しました"
   study_sessions:
+    show:
+      question_count: "全%{count}問"
     create:
       no_cards: "この単語帳にはカードがありません"
       success: "学習を開始します！"
@@ -80,3 +82,13 @@ ja:
     retry_wrong:
       no_wrong_answers: "すべて正解でした！"
       retry_start: "間違えた問題で再挑戦を開始します！"
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short:   "%Y/%m/%d"
+      long:    "%Y年%m月%d日"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+      short:   "%m/%d %H:%M"
+      long:    "%Y年%m月%d日 %H:%M"

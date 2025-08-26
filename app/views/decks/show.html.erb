@@ -1,39 +1,97 @@
 <div class="container mx-auto px-4 py-8">
-  <div class="max-w-4xl mx-auto">
-    <%# ヘッダー部分: タイトルとアクションボタン %>
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-800">
-        <%= t('.title') %> <span class="font-medium"><%= @deck.name %></span>
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- ヘッダー -->
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900">
+        <%= t('.title') %>
+        <span class="ml-2 font-medium text-gray-700"><%= @deck.name %></span>
       </h1>
-      <div class="flex items-center space-x-2">
-        <%= link_to t('.edit_deck'), edit_deck_path(@deck), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
-        <%= button_to t('.destroy_deck'), @deck, method: :delete, data: { turbo_confirm: t('helpers.confirmations.destroy') }, class: "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
-        <%= link_to t('.back_to_decks'), decks_path, class: "text-blue-500 hover:text-blue-800" %>
+      <div class="flex items-center gap-2">
+        <% has_cards = @deck.respond_to?(:cards_count) ? @deck.cards_count.to_i > 0 : @deck.cards.any? %>
+        <%= button_to t('.start_learning', default: "学習開始"),
+              deck_study_sessions_path(@deck),
+              method: :post,
+              disabled: !has_cards,
+              class: "inline-flex items-center rounded-xl px-4 py-2 text-sm font-medium text-white " +
+                      (has_cards ? "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                 : "bg-gray-300 cursor-not-allowed") %>
+
+        <%= link_to t('.edit_deck'), edit_deck_path(@deck),
+              class: "inline-flex items-center rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+
+        <%= button_to t('.destroy_deck'),
+              @deck,
+              method: :delete,
+              data: { turbo_confirm: t('helpers.confirmations.destroy') },
+              class: "inline-flex items-center rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700" %>
+
+        <%= link_to t('.back_to_decks'), decks_path,
+              class: "inline-flex items-center rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
       </div>
     </div>
 
-    <%# 学習開始ボタン %>
-    <div class="mt-6 text-center">
-      <%= button_to "この単語帳で学習する", deck_study_sessions_path(@deck), method: :post, class: "btn btn-primary btn-wide" %>
+    <!-- 単語数 / 作成日 / 最終更新 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="rounded-2xl border border-gray-200 bg-white shadow p-5">
+        <div class="text-xs uppercase tracking-wider text-gray-500">単語数</div>
+        <div class="mt-2 text-2xl font-semibold text-gray-900 tabular-nums"><%= @deck.cards.size %></div>
+      </div>
+      <div class="rounded-2xl border border-gray-200 bg-white shadow p-5">
+        <div class="text-xs uppercase tracking-wider text-gray-500">作成日</div>
+        <div class="mt-2 text-lg text-gray-900">
+          <%= l(@deck.created_at.in_time_zone.to_date, format: :short) %>
+        </div>
+      </div>
+      <div class="rounded-2xl border border-gray-200 bg-white shadow p-5">
+        <div class="text-xs uppercase tracking-wider text-gray-500">最終更新</div>
+        <div class="mt-2 text-lg text-gray-900">
+          <%= l(@deck.updated_at.in_time_zone.to_date, format: :short) %>
+        </div>
+      </div>
     </div>
 
-    <%# 単語カード一覧を表示するエリア %>
-    <div class="bg-white shadow-md rounded-lg p-6 mt-8">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-semibold text-gray-700"><%= t('.cards_title') %></h2>
-        <%= link_to t('.new_card'), new_deck_card_path(@deck), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
+    <!-- カード情報 -->
+    <div class="rounded-2xl border border-gray-200 bg-white shadow">
+      <div class="px-6 py-5 border-b border-gray-100">
+        <h2 class="text-sm font-medium text-gray-700">カード情報</h2>
+      </div>
+      <div class="px-6 py-6">
+        <dl class="grid grid-cols-1 gap-y-4 sm:grid-cols-2">
+          <div>
+            <dt class="text-xs uppercase tracking-wider text-gray-500">単語帳名</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @deck.name %></dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-wider text-gray-500">単語数</dt>
+            <dd class="mt-1 text-sm text-gray-900 tabular-nums"><%= @deck.cards.size %></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- カード一覧 -->
+    <div class="rounded-2xl border border-gray-200 bg-white shadow">
+      <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="text-base font-semibold text-gray-800"><%= t('.cards_title') %></h2>
+        <%= link_to t('.new_card'), new_deck_card_path(@deck),
+              class: "inline-flex items-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700" %>
       </div>
 
-      <% if @cards.any? %>
-        <div id="cards" class="space-y-4">
-          <%= render @cards %>
-        </div>
-      <% else %>
-        <div class="text-center bg-gray-50 p-10 rounded-lg border border-dashed">
-          <p class="text-gray-600 mb-4"><%= t('.no_cards') %></p>
-          <%= link_to t('.create_first_card'), new_deck_card_path(@deck), class: "inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
-        </div>
-      <% end %>
+      <div class="px-6 py-6">
+        <% if @cards.any? %>
+          <div id="cards" class="space-y-4">
+            <%= render @cards %>
+          </div>
+        <% else %>
+          <div class="text-center bg-gray-50 p-10 rounded-xl border border-dashed">
+            <p class="text-gray-600 mb-4"><%= t('.no_cards') %></p>
+            <%= link_to t('.create_first_card'), new_deck_card_path(@deck),
+                  class: "inline-flex items-center rounded-xl bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700" %>
+          </div>
+        <% end %>
+      </div>
     </div>
+
   </div>
 </div>

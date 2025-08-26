@@ -19,7 +19,7 @@ class DecksController < ApplicationController
   end
 
   def create
-    @deck = Deck.new(deck_params)
+    @deck = current_user.decks.build(deck_params)
 
     if @deck.save
       redirect_to @deck, notice: t(".success")
@@ -44,7 +44,7 @@ class DecksController < ApplicationController
   private
 
   def set_deck
-    @deck = Deck.find(params[:id])
+    @deck = current_user.decks.find(params[:id])
   end
 
   def deck_params

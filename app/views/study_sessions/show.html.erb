@@ -1,48 +1,94 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="max-w-2xl mx-auto">
-    <%# 進捗状況を確認 %>
-    <div class="mb-4">
-      <p class="text-sm text-gray-600 text-right"><%= t('.progress_status', current: @session.current_index + 1, total: @session.card_order.size) %></p>
-      <progress class="progress progress-primary w-full" value="<%= @session.current_index + 1 %>" max="<%= @session.card_order.size %>"></progress>
-    </div>
-
-    <%# 問題 %>
-    <div class="card bg-base-100 shadow-xl mb-6 min-h-32">
-    <div class="card-body">
-        <h2 class="card-title"><%= t('.question_title') %></h2>
-        <p class="text-lg whitespace-pre-wrap"><%= @card.question %></p>
-    </div>
-    </div>
-
-    <%# 答え  %>
-    <% if @reveal %>
-    <div class="card bg-base-100 shadow-xl min-h-32">
-        <div class="card-body">
-        <h2 class="card-title"><%= t('.answer_title') %></h2>
-        <p class="text-lg whitespace-pre-wrap"><%= @card.answer %></p>
-        </div>
-    </div>
-
-    <%= form_with(model: @session, url: answer_deck_study_session_path(@deck, @session), method: :post, class: "mt-6 flex justify-center gap-4") do |f| %>
-      <%= hidden_field_tag :card_id, @card.id %>
-      <%= f.button t('.correct_button'), name: "correct", value: true, class: "btn btn-success" %>
-      <%= f.button t('.incorrect_button'), name: "correct", value: false, class: "btn btn-error" %>
-      <%= f.button t('.correct_button'), name: "correct", value: true, class: "btn btn-success" %>
-    <% end %>
-  <% else %>
-    <div class="text-center">
-      <%= link_to t('.reveal_button'), deck_study_session_path(@deck, @session, reveal: true), class: "btn btn-primary" %>
-    </div>
-  <% end %>
-
-    <%# ナビゲーション %>
-    <div class="mt-8 flex justify-between">
+<div class="min-h-screen bg-blue-50">
+  <!-- 上部ヘッダー（Web向けフル幅） -->
+  <header class="sticky top-0 z-20 bg-white/90 backdrop-blur border-b">
+    <div class="container mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
         <% if @session.current_index > 0 %>
-        <%= button_to t('.back_button'), back_deck_study_session_path(@deck, @session), method: :post, class: "btn btn-ghost" %>
+          <%= button_to t('.back_button'),
+                back_deck_study_session_path(@deck, @session),
+                method: :post,
+                class: "btn btn-ghost btn-sm rounded-xl" %>
         <% else %>
-        <div></div>
+          <span class="btn btn-ghost btn-sm opacity-0 rounded-xl">.</span>
         <% end %>
-        <%= link_to t('.result_button'), result_deck_study_session_path(@deck, @session), class: "btn btn-outline" %>
+
+        <div class="pl-2">
+          <div class="text-sm font-semibold text-gray-900">
+            <%= @deck.name.presence || t('.default_title', default: 'Quit') %>
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden sm:flex items-center gap-4 text-sm">
+        <span class="text-gray-500">
+          <%= t('.progress_label', default: '問題') %>
+          <%= @session.current_index + 1 %>/<%= @session.card_order.size %>
+        </span>
+        <%= link_to t('.result_button'),
+              result_deck_study_session_path(@deck, @session),
+              class: "btn btn-outline btn-sm rounded-xl" %>
+        <%= link_to t('.back_to_deck', default: '単語帳へ戻る'),
+              deck_path(@deck),
+              class: "text-blue-700 hover:underline" %>
+      </div>
     </div>
-  </div>
+
+    <!-- 進捗バー（フル幅・小さめ） -->
+    <div class="bg-white/80">
+      <div class="container mx-auto max-w-6xl px-6 pb-4">
+        <progress
+          class="progress progress-primary w-full"
+          value="<%= @session.current_index + 1 %>"
+          max="<%= @session.card_order.size %>"
+          aria-label="<%= t('.progress_status', current: @session.current_index + 1, total: @session.card_order.size) %>">
+        </progress>
+      </div>
+    </div>
+  </header>
+
+  <!-- 本文（Web向けの幅と余白） -->
+  <main class="container mx-auto max-w-4xl px-6 py-10">
+    <!-- 中央寄せ：下が開きすぎないよう最小高さを調整（ヘッダー分を控えめに差し引く） -->
+    <div class="grid min-h-[calc(100vh-220px)] place-content-center">
+      <!-- 問題カード（丸み強めだがWebに合わせて控えめに調整可） -->
+      <section class="rounded-2xl border bg-white shadow-sm p-6">
+       <span class="inline-block text-sm font-medium text-gray-600">
+        問題 <%= @session.current_index + 1 %>/<%= @session.card_order.size %>
+       </span>
+        <h1 class="text-2xl font-semibold text-gray-900 mb-4 leading-snug">
+          <%= @card.question %>
+        </h1>
+
+        <% if @reveal %>
+          <!-- 答え（青×白・角丸強め） -->
+          <div class="rounded-2xl bg-blue-900 text-white px-5 py-4 mb-4 shadow">
+            <p class="text-base whitespace-pre-wrap"><%= @card.answer %></p>
+          </div>
+
+          <!-- 正解/不正解（Web向け・横並び） -->
+          <%= form_with(model: @session,
+                        url: answer_deck_study_session_path(@deck, @session),
+                        method: :post,
+                        class: "mt-6 flex flex-col sm:flex-row items-center justify-center gap-4") do |f| %>
+            <%= hidden_field_tag :card_id, @card.id %>
+
+            <%= f.button t('.correct_button'),
+                  name: "correct", value: true,
+                  class: "btn btn-primary rounded-xl min-w-44" %>
+
+            <%= f.button t('.incorrect_button'),
+                  name: "correct", value: false,
+                  class: "btn btn-outline rounded-xl min-w-44" %>
+          <% end %>
+        <% else %>
+          <!-- 答え未表示：ボタンだけ中央配置 -->
+          <div class="text-center mt-4">
+            <%= link_to t('.reveal_button', default: 'See Answer'),
+                  deck_study_session_path(@deck, @session, reveal: true),
+                  class: "btn btn-primary rounded-xl min-w-48" %>
+          </div>
+        <% end %>
+      </section>
+    </div>
+  </main>
 </div>
