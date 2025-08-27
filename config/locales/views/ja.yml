@@ -10,12 +10,25 @@ ja:
       destroy: "削除"
     confirmations:
       destroy: "本当に削除しますか？"
+  common:
+    start_study: "学習開始"
+    cancel: "キャンセル"
+    save: "保存する"
+    login: "ログイン"
+    logout: "ログアウト"
   decks:
     index:
       title: "単語帳一覧"
       new_deck: "新しい単語帳を作成"
       no_decks: "単語帳はまだありません"
       create_first: "最初の単語帳を作成する"
+      headers:
+        name: "単語帳名"
+        created_at: "作成日"
+        cards_count: "カード数"
+        actions: "操作"
+    form:
+      name_placeholder: "例）英単語100"
     new:
       title: "新しい単語帳"
       back_to_decks: "単語帳一覧に戻る"
@@ -28,6 +41,14 @@ ja:
       new_card: "新しいカードを追加"
       no_cards: "まだカードがありません"
       create_first_card: "最初のカードを作成する"
+      stats:
+        cards_count: "単語数"
+        created_at: "作成日"
+        updated_at: "最終更新日"
+      details:
+        title: "カード情報"
+        deck_name: "単語帳名"
+        cards_count: "単語数"
     edit:
       title: "単語帳を編集"
       back_to_deck: "単語帳に戻る"
@@ -57,6 +78,10 @@ ja:
     answer:
       answer_failed: "回答を保存できませんでした。 もう一度お試しください。"
     show:
+      default_title: "単語帳"
+      progress_label: "問題"
+      question_counter: "問題 %{current}/%{total}"
+      question_count: "全%{count}問"
       progress_status: "%{current} / %{total}"
       question_title: "問題"
       answer_title: "答え"
@@ -65,9 +90,11 @@ ja:
       reveal_button: "答えを確認する"
       back_button: "前の問題へ戻る"
       result_button: "結果を確認"
+      back_to_deck: "単語帳へ戻る"
     result:
       all_correct: "全問正解！おめでとう！"
       title: "学習結果"
+      summary_hint: ""
       answered_count: "解答数"
       correct_count: "正解数"
       correct_rate: "正解率"
@@ -80,3 +107,18 @@ ja:
     retry_wrong:
       no_wrong_answers: "すべて正解でした！"
       retry_start: "間違えた問題で再挑戦を開始します！"
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short:   "%Y/%m/%d"
+      long:    "%Y年%m月%d日"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+      short:   "%m/%d %H:%M"
+      long:    "%Y年%m月%d日 %H:%M"
+  sessions:
+    new:
+      labels:
+        email: "メールアドレス"
+        password: "パスワード"

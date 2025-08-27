@@ -1,21 +1,95 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="max-w-4xl mx-auto">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-800"><%= t('.title') %></h1>
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-3xl font-bold text-gray-800"><%= t('.title') %></h1>
 
-      <%# 新規作成ボタン %>
-      <%= link_to t('.new_deck'), new_deck_path, class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
-    </div>
+  <div class="flex items-center gap-3">
+    <%= link_to t('.new_deck'), new_deck_path,
+          class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
 
-    <% if @decks.any? %>
-      <div id="decks" class="space-y-4">
-        <%= render @decks %>
-      </div>
+    <% if logged_in? %>
+      <%= button_to t('common.logout'),
+            logout_path,
+            method: :delete,
+            class: "inline-block bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
     <% else %>
-      <div class="text-center bg-gray-50 p-10 rounded-lg border border-dashed">
-        <p class="text-gray-600 mb-4"><%= t('.no_decks') %></p>
-        <%= link_to t('.create_first'), new_deck_path, class: "inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors" %>
-      </div>
+      <%= link_to t('common.login'),
+            login_path,
+            class: "inline-block text-blue-600 hover:underline" %>
     <% end %>
   </div>
 </div>
+
+<div class="space-y-6">
+
+  <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="...">
+            <% dir = params[:dir] == "asc" ? "desc" : "asc" %>
+            <%= link_to decks_path(request.query_parameters.merge(sort: "name", dir: dir)),
+                  class: "inline-flex items-center gap-1 hover:text-gray-700" do %>
+              <%= t('.headers.name') %>
+            <% end %>
+          </th>
+          <th class="..."><%= t('.headers.created_at') %></th>
+          <th class="..."><%= t('.headers.cards_count') %></th>
+          <th class="..."><%= t('.headers.actions') %></th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-100 bg-white">
+        <% if @decks.present? %>
+          <% @decks.each do |deck| %>
+            <tr class="hover:bg-gray-50/70">
+              <td class="px-6 py-4 text-sm text-gray-900">
+                <%= link_to deck.name, deck_path(deck), class: "font-medium text-blue-600 hover:underline" %>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-700">
+                <%= l(deck.created_at.to_date, format: :short) rescue deck.created_at.strftime("%Y-%m-%d") %>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-700">
+                <%= deck.cards.size %>
+              </td>
+              <td class="px-6 py-4">
+                <div class="flex items-center justify-end gap-2">
+                  <%= link_to t('helpers.links.edit'), edit_deck_path(deck),
+                        class: "inline-flex items-center rounded-lg border border-gray-300 px-3 py-1.5 
+                                text-sm text-gray-700 hover:bg-gray-100" %>
+                  <%= link_to t('helpers.links.show'), deck_path(deck),
+                        class: "inline-flex items-center rounded-lg border border-gray-300 px-3 py-1.5 
+                                text-sm text-gray-700 hover:bg-gray-100" %>
+                  <%= button_to t('common.start_study'),
+                        deck_study_sessions_path(deck),
+                        method: :post,
+                        class: "inline-flex items-center rounded-lg bg-blue-600 px-3 py-1.5 
+                                text-sm font-medium text-white hover:bg-blue-700 
+                                focus:outline-none focus:ring-2 focus:ring-blue-500",
+                        form: { data: { turbo: true } } %>
+                  <%= button_to t('helpers.links.destroy'), deck_path(deck),
+                        method: :delete,
+                        data: { confirm: t('helpers.confirmations.destroy') },
+                        class: "inline-flex items-center rounded-lg bg-red-600 px-3 py-1.5 
+                                text-sm font-medium text-white hover:bg-red-700 
+                                focus:outline-none focus:ring-2 focus:ring-red-500" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <!-- 単語帳が1つも存在しないとき -->
+          <tr>
+            <td colspan="4" class="px-6 py-16">
+              <div class="flex flex-col items-center justify-center text-center">
+                <div class="mb-3 rounded-2xl bg-blue-50 p-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h5a1 1 0 010 2H4v10h12V9a1 1 0 112 0v6a2 2 0 01-2 2H4a2 2 0 01-2-2V5z"/><path d="M9 7a1 1 0 011-1h6a1 1 0 011 1v1h-8V7z"/></svg>
+                </div>
+                <p class="mb-4 text-sm text-gray-600"><%= t('.no_decks') %></p>
+                <%= link_to t('.new_deck'), new_deck_path,
+                      class: "inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>

@@ -1,10 +1,33 @@
-<%= form_with(model: deck, class: "bg-white shadow-md rounded-lg p-8") do |form| %>
-  <%= render 'shared/error_messages', object: form.object %>
-
-  <div class="mb-6">
-    <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
-    <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", autofocus: true %>
+<%= form_with(model: deck, class: "rounded-2xl border border-gray-200 bg-white shadow") do |form| %>
+  <div class="px-6 py-5 border-b border-gray-100">
+    <h2 class="text-sm font-medium text-gray-700"></h2>
   </div>
 
-  <%= form.submit class: "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors cursor-pointer" %>
+  <div class="px-6 py-6 space-y-5">
+    <%= render 'shared/error_messages', object: form.object %>
+
+    <div>
+      <%= form.label :name,
+            Deck.human_attribute_name(:name),
+            class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :name,
+            class: "w-full rounded-xl border border-gray-300 px-3 py-2 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+            autofocus: true,
+            placeholder: t('decks,form.name_placeholder') %>
+
+      <p class="mt-1 text-xs text-gray-500"></p>
+    </div>
+  </div>
+
+  <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/60 flex items-center justify-end gap-2 rounded-b-2xl">
+    <%= link_to t('common.cancel'),
+          decks_path,
+          class: "inline-flex items-center rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+    <%= form.submit(
+      form.object.persisted? ?
+        t('helpers.submit.update', model: Deck.model_name.human, default: t('common.save')) :
+        t('helpers.submit.create', model: Deck.model_name.human, default: t('common.save')),
+      class: "inline-flex items-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+    ) %>
+  </div>
 <% end %>
