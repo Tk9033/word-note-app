@@ -1,5 +1,5 @@
 <div class="min-h-screen bg-blue-50">
-  <!-- 上部ヘッダー（Web向けフル幅） -->
+
   <header class="sticky top-0 z-20 bg-white/90 backdrop-blur border-b">
     <div class="container mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <!-- 進捗バー（フル幅・小さめ） -->
+    <!-- 進捗バー -->
     <div class="bg-white/80">
       <div class="container mx-auto max-w-6xl px-6 pb-4">
         <progress
@@ -46,26 +46,24 @@
     </div>
   </header>
 
-  <!-- 本文（Web向けの幅と余白） -->
-  <main class="container mx-auto max-w-4xl px-6 py-10">
-    <!-- 中央寄せ：下が開きすぎないよう最小高さを調整（ヘッダー分を控えめに差し引く） -->
-    <div class="grid min-h-[calc(100vh-220px)] place-content-center">
-      <!-- 問題カード（丸み強めだがWebに合わせて控えめに調整可） -->
-      <section class="rounded-2xl border bg-white shadow-sm p-6">
-       <span class="inline-block text-sm font-medium text-gray-600">
+  <main class=" mx-auto max-w-5xl px-10 py-16">
+    <div class="flex min-h-[calc(100vh-220px)] items-start md:items-center">
+      <!-- 問題カード -->
+      <section class="w-full rounded-2xl border bg-white shadow-sm p-6 md:p-10/12">
+       <span class="inline-block text-sm font-medium text-gray-600 mb-4">
         問題 <%= @session.current_index + 1 %>/<%= @session.card_order.size %>
        </span>
-        <h1 class="text-2xl font-semibold text-gray-900 mb-4 leading-snug">
+        <h1 class="text-3xl font-semibold text-gray-900 mb-6 leading-snug">
           <%= @card.question %>
         </h1>
 
         <% if @reveal %>
-          <!-- 答え（青×白・角丸強め） -->
-          <div class="rounded-2xl bg-blue-900 text-white px-5 py-4 mb-4 shadow">
+          <!-- 答え -->
+          <div class="rounded-2xl bg-blue-100 text-blue-900 px-6 py-5 mb-6 shadow">
             <p class="text-base whitespace-pre-wrap"><%= @card.answer %></p>
           </div>
 
-          <!-- 正解/不正解（Web向け・横並び） -->
+          <!-- 正解/不正解 -->
           <%= form_with(model: @session,
                         url: answer_deck_study_session_path(@deck, @session),
                         method: :post,
@@ -81,8 +79,8 @@
                   class: "btn btn-outline rounded-xl min-w-44" %>
           <% end %>
         <% else %>
-          <!-- 答え未表示：ボタンだけ中央配置 -->
-          <div class="text-center mt-4">
+
+          <div class="text-center mt-6">
             <%= link_to t('.reveal_button', default: 'See Answer'),
                   deck_study_session_path(@deck, @session, reveal: true),
                   class: "btn btn-primary rounded-xl min-w-48" %>

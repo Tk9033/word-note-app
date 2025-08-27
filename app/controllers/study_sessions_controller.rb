@@ -48,7 +48,7 @@ class StudySessionsController < ApplicationController
   results = @session.study_results.includes(:card)
 
   @total         = @session.card_order.size
-  @answered      = results.size                     # => COUNT(*)
+  @answered      = results.size
   @correct_count = results.where(correct: true).count
   @wrong_results = results.where(correct: false).to_a
 
