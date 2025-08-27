@@ -9,7 +9,7 @@
       </h1>
       <div class="flex items-center gap-2">
         <% has_cards = @deck.respond_to?(:cards_count) ? @deck.cards_count.to_i > 0 : @deck.cards.any? %>
-        <%= button_to t('.start_learning', default: "学習開始"),
+        <%= button_to t('common.start_study'),
               deck_study_sessions_path(@deck),
               method: :post,
               disabled: !has_cards,
@@ -33,17 +33,17 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="rounded-2xl border border-gray-200 bg-white shadow p-5">
-        <div class="text-xs uppercase tracking-wider text-gray-500">単語数</div>
+        <div class="text-xs uppercase tracking-wider text-gray-500"><%= t('.stats.cards_count') %></div>
         <div class="mt-2 text-2xl font-semibold text-gray-900 tabular-nums"><%= @deck.cards.size %></div>
       </div>
       <div class="rounded-2xl border border-gray-200 bg-white shadow p-5">
-        <div class="text-xs uppercase tracking-wider text-gray-500">作成日</div>
+        <div class="text-xs uppercase tracking-wider text-gray-500"><%= t('.stats.created_at') %></div>
         <div class="mt-2 text-lg text-gray-900">
           <%= l(@deck.created_at.in_time_zone.to_date, format: :short) %>
         </div>
       </div>
       <div class="rounded-2xl border border-gray-200 bg-white shadow p-5">
-        <div class="text-xs uppercase tracking-wider text-gray-500">最終更新</div>
+        <div class="text-xs uppercase tracking-wider text-gray-500"><%= t('.stats.updated_at') %></div>
         <div class="mt-2 text-lg text-gray-900">
           <%= l(@deck.updated_at.in_time_zone.to_date, format: :short) %>
         </div>
@@ -53,16 +53,16 @@
     <!-- カード情報 -->
     <div class="rounded-2xl border border-gray-200 bg-white shadow">
       <div class="px-6 py-5 border-b border-gray-100">
-        <h2 class="text-sm font-medium text-gray-700">カード情報</h2>
+        <h2 class="text-sm font-medium text-gray-700"><%= t('.details.title') %></h2>
       </div>
       <div class="px-6 py-6">
         <dl class="grid grid-cols-1 gap-y-4 sm:grid-cols-2">
           <div>
-            <dt class="text-xs uppercase tracking-wider text-gray-500">単語帳名</dt>
+            <dt class="text-xs uppercase tracking-wider text-gray-500"><%= t('.details.deck_name') %></dt>
             <dd class="mt-1 text-sm text-gray-900"><%= @deck.name %></dd>
           </div>
           <div>
-            <dt class="text-xs uppercase tracking-wider text-gray-500">単語数</dt>
+            <dt class="text-xs uppercase tracking-wider text-gray-500"><%= t('.details.cards_count') %></dt>
             <dd class="mt-1 text-sm text-gray-900 tabular-nums"><%= @deck.cards.size %></dd>
           </div>
         </dl>

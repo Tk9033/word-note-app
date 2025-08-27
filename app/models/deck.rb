@@ -1,4 +1,5 @@
 class Deck < ApplicationRecord
+  belongs_to :user
   has_many :study_sessions, dependent: :destroy
   has_many :cards, dependent: :destroy
 

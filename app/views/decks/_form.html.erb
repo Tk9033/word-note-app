@@ -7,19 +7,27 @@
     <%= render 'shared/error_messages', object: form.object %>
 
     <div>
-      <%= form.label :name, "単語帳名", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.label :name,
+            Deck.human_attribute_name(:name),
+            class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.text_field :name,
             class: "w-full rounded-xl border border-gray-300 px-3 py-2 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
             autofocus: true,
-            placeholder: "例）英単語100" %>
+            placeholder: t('decks,form.name_placeholder') %>
+
       <p class="mt-1 text-xs text-gray-500"></p>
     </div>
   </div>
 
   <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/60 flex items-center justify-end gap-2 rounded-b-2xl">
-    <%= link_to t('helpers.cancel', default: "キャンセル"), decks_path,
+    <%= link_to t('common.cancel'),
+          decks_path,
           class: "inline-flex items-center rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
-    <%= form.submit t('helpers.submit.update', model: Deck.model_name.human, default: "保存する"),
-          class: "inline-flex items-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= form.submit(
+      form.object.persisted? ?
+        t('helpers.submit.update', model: Deck.model_name.human, default: t('common.save')) :
+        t('helpers.submit.create', model: Deck.model_name.human, default: t('common.save')),
+      class: "inline-flex items-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+    ) %>
   </div>
 <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_17_074029) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_23_130411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,7 +27,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_17_074029) do
     t.string "name", limit: 50, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["name"], name: "index_decks_on_name", unique: true
+    t.index ["user_id"], name: "index_decks_on_user_id"
   end
 
   create_table "study_results", force: :cascade do |t|
@@ -53,7 +55,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_17_074029) do
     t.index ["status"], name: "index_study_sessions_on_status"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "crypted_password"
+    t.string "salt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
   add_foreign_key "cards", "decks"
+  add_foreign_key "decks", "users"
   add_foreign_key "study_results", "cards", on_delete: :cascade
   add_foreign_key "study_results", "study_sessions", on_delete: :cascade
   add_foreign_key "study_sessions", "decks", on_delete: :cascade

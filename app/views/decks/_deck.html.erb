@@ -2,7 +2,7 @@
   <span class="font-semibold text-lg text-gray-800"><%= deck.name %></span>
   <div class="flex items-center space-x-2">
     <% if deck.cards.any? %>
-      <%= button_to "学習", deck_study_sessions_path(deck), method: :post, class: "btn btn-sm btn-primary" %>
+      <%= button_to t('common.start_study'), deck_study_sessions_path(deck), method: :post, class: "btn btn-sm btn-primary" %>
     <% end %>
     <%= link_to t('helpers.links.show'), deck, class: "btn btn-sm btn-secondary" %>
     <%= link_to t('helpers.links.edit'), edit_deck_path(deck), class: "btn btn-sm btn-accent" %>
