@@ -31,9 +31,15 @@
               <%= t('.headers.name') %>
             <% end %>
           </th>
-          <th class="..."><%= t('.headers.created_at') %></th>
-          <th class="..."><%= t('.headers.cards_count') %></th>
-          <th class="..."><%= t('.headers.actions') %></th>
+          <th class="px-6 py-3 text-center font-semibold"><%= t('.headers.created_at') %></th>
+          <th class="px-6 py-3 text-center font-semibold"><%= t('.headers.cards_count') %></th>
+          <th class="px-6 py-3 font-semibold">
+            <div class="flex justify-end">
+              <span class="inline-block w-[18rem] text-center">
+                <%= t('.headers.actions') %>
+              </span>
+            </div>
+          </th>
         </tr>
       </thead>
 
@@ -44,14 +50,14 @@
               <td class="px-6 py-4 text-sm text-gray-900">
                 <%= link_to deck.name, deck_path(deck), class: "font-medium text-blue-600 hover:underline" %>
               </td>
-              <td class="px-6 py-4 text-sm text-gray-700">
+              <td class="px-6 py-4 text-sm text-gray-700 text-center tabular-nums">
                 <%= l(deck.created_at.to_date, format: :short) rescue deck.created_at.strftime("%Y-%m-%d") %>
               </td>
-              <td class="px-6 py-4 text-sm text-gray-700">
+              <td class="px-6 py-4 text-sm text-gray-700 text-center tabular-nums">
                 <%= deck.cards.size %>
               </td>
               <td class="px-6 py-4">
-                <div class="flex items-center justify-end gap-2">
+                <div class="flex items-center justify-end gap-2 min-w-[12rem]">
                   <%= link_to t('helpers.links.edit'), edit_deck_path(deck),
                         class: "inline-flex items-center rounded-lg border border-gray-300 px-3 py-1.5 
                                 text-sm text-gray-700 hover:bg-gray-100" %>
