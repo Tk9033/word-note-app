@@ -2,7 +2,14 @@ class DecksController < ApplicationController
   before_action :set_deck, only: %i[show edit update destroy]
 
   def index
-    @decks = Deck.all.includes(:cards)
+    scope = current_user.decks.includes(:cards)
+    dir = %i[asc desc].include?(params[:dir]&.to_sym) ? params[:dir] : :desc
+      @decks =
+      case params[:sort]
+      when "name"       then scope.order(name: dir)
+      when "created_at" then scope.order(created_at: dir)
+      else                    scope.order(created_at: :desc)
+      end
   end
 
   def show
@@ -11,7 +18,7 @@ class DecksController < ApplicationController
   end
 
   def new
-    @deck = Deck.new
+    @deck = current_user.decks.new
   end
 
   def edit

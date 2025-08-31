@@ -13,7 +13,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should create (login)" do
     login_as(@user)
     assert_response :redirect
-    assert_redirected_to root_path
+    assert_redirected_to decks_path
   end
 
   test "should not login with wrong password" do
