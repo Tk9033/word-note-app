@@ -34,4 +34,28 @@ class DecksAccessTest < ActionDispatch::IntegrationTest
     get deck_path(9_999_999)
     assert_redirected_to decks_path
   end
+
+  test "cannot edit others deck" do
+    login_as(@owner)
+    get edit_deck_path(@others_deck)
+    assert_redirected_to decks_path
+    follow_redirect!
+    assert_includes @response.body, "ページが見つからないか、閲覧権限がありません。"
+  end
+
+  test "cannot update others deck" do
+    login_as(@owner)
+    original = @others_deck.name
+    patch deck_path(@others_deck), params: { deck: { name: "Hacked" } }
+    assert_redirected_to decks_path
+    assert_equal original, @others_deck.reload.name
+  end
+
+  test "cannot destroy others deck" do
+    login_as(@owner)
+    assert_no_difference("Deck.count") do
+        delete deck_path(@others_deck)
+    end
+    assert_redirected_to decks_path
+  end
 end
