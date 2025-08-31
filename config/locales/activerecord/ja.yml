@@ -15,7 +15,7 @@ ja:
           attributes:
             question:
               taken: "この問題はすでに登録されています"
-  errors: # このブロックを ja: の中にインデントします
+  errors:
     format: "%{attribute}%{message}"
     messages:
       blank: "を入力してください"

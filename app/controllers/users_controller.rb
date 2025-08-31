@@ -22,9 +22,9 @@ class UsersController < ApplicationController
     auto_login(user)
     redirect_to root_path, notice: t("auth.logged_in", default: "ログインしました")
   else
-    user.errors.each do |attr, msg|
-      mapped_attr = (attr == :password_digest) ? :password : attr
-      @sign_up_form.errors.add(mapped_attr, msg)
+    user.errors.each do |error|
+      mapped_attr = (error.attribute == :password_digest) ? :password : error.attribute
+      @sign_up_form.errors.add(mapped_attr, error.message)
     end
     render :new, status: :unprocessable_entity
   end

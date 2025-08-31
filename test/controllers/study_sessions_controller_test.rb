@@ -1,18 +1,24 @@
+require "securerandom"
 require "test_helper"
 
 class StudySessionsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    # 毎回確実にログインできるユーザーを作る
+    @user = User.create!(
+      name: "u1",
+      email: "u1+#{SecureRandom.hex(4)}@example.com",
+      password: "password"
+    )
 
-    # fixtures に decks(:one) があれば使う。無ければ新規作成。
-    deck_record = (decks(:one) rescue nil)
-    @deck = deck_record.is_a?(Deck) ? deck_record : Deck.create!(name: "DeckOne")
+    # ログインユーザー所有のデッキを必ず作る
+    @deck = Deck.create!(name: "Deck-#{SecureRandom.hex(6)}", user: @user)
 
-    # セッション作成がスキップされないよう最低2枚カードを用意
-    @deck.cards.create!(question: "Q1", answer: "A1") if @deck.cards.empty?
-    @deck.cards.create!(question: "Q2", answer: "A2") if @deck.cards.size < 2
+    # 最低2枚のカードを用意（作成ロジックに依存しているため）
+    @deck.cards.create!(question: "Q1", answer: "A1")
+    @deck.cards.create!(question: "Q2", answer: "A2")
 
-    log_in_as(@user)
+    # ログイン
+    login_as(@user)
   end
 
   test "should create session" do
@@ -38,7 +44,7 @@ class StudySessionsControllerTest < ActionDispatch::IntegrationTest
 
     current_card = study_session.current_card || @deck.cards.first
     post answer_deck_study_session_path(@deck, study_session),
-         params:  { card_id: current_card.id, correct: true }
+         params: { card_id: current_card.id, correct: true }
     assert_response :redirect
 
     study_session.reload
@@ -51,7 +57,7 @@ class StudySessionsControllerTest < ActionDispatch::IntegrationTest
 
     current = study_session.current_card || @deck.cards.first
     post answer_deck_study_session_path(@deck, study_session),
-         params:  { card_id: current.id, correct: true }
+         params: { card_id: current.id, correct: true }
     study_session.reload
     assert_equal 1, study_session.current_index
 

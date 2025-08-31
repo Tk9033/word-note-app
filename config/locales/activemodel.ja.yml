@@ -12,4 +12,10 @@ ja:
         name: 名前
         email: メールアドレス
         password: パスワード
-        password_confirmation: パスワード (確認)
+        password_confirmation: パスワード
+    errors:
+      models:
+        sign_up_form:
+          attributes:
+            password_confirmation:
+              confirmation: "と一致しません"
