@@ -1,7 +1,6 @@
 require "test_helper"
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     @user = User.create!(name: "u", email: "u@example.com", password: "password")
   end

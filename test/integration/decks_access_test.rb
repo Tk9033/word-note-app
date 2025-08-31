@@ -1,7 +1,6 @@
 require "test_helper"
 
 class DecksAccessTest < ActionDispatch::IntegrationTest
-
   setup do
     @owner = User.create!(name: "u1", email: "u1@example.com", password: "password")
     @other = User.create!(name: "u2", email: "u2@example.com", password: "password")
