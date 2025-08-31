@@ -5,7 +5,7 @@ ja:
       card: 単語カード
     attributes:
       deck:
-        name: 名前
+        name: 単語帳名
       card:
         question: 問題
         answer: 答え

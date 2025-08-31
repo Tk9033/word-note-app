@@ -1,24 +1,67 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### 1. サービス概要
+**「WordNote」** は、シンプルに学べる単語帳アプリです。
+日々のプログラミング学習や資格勉強を効率的に進めていくことを目的としています。
 
-Things you may want to cover:
+ユーザーは自分専用の単語帳を作成し、テスト形式で繰り返し復習することで、
+スキマ時間でも効率的に学習を継続できます。
 
-* Ruby version
 
-* System dependencies
+### 2. メインのターゲットユーザー
+- 資格試験やプログラミング学習で、効率的に学習を進めたい人
 
-* Configuration
+- スキマ時間を活用したい人
 
-* Database creation
 
-* Database initialization
+### 3. 主な機能
+**単語帳管理機能**
+- フォルダ（単語帳）の作成・編集・削除
+- 単語カードの作成・編集・削除・解答 を登録
+- 複数のフォルダを作成して管理可能
 
-* How to run the test suite
+**学習機能**
+- フォルダ内の単語をランダムに出題
+- 「答えを確認する」ボタンで解答を確認
+- 「わかった!」「わからなかった」ボタンで自己採点
+- 学習結果 正解数、正答率を表示
+- 解答中に前の問題に戻れる機能
 
-* Services (job queues, cache servers, search engines, etc.)
+**復習機能**
+- 不正解だった問題だけをまとめて表示
+- 「間違えた問題をやり直す」ボタンで再挑戦可能
+- 再挑戦後も結果を表示
 
-* Deployment instructions
+**ユーザー管理機能**
+- Sorcery を用いたユーザー登録、ログイン、ログアウト
+- ログインユーザーごとに単語帳を管理
 
-* ...
+
+### 4. 使用技術
+**バックエンド**
+- Rails 7.2.1
+- Ruby 3.3.6
+- PostgreSQL
+- Sorcery (認証)
+
+**フロントエンド**
+- Tailwind CSS
+- Stimulus (JavaScriptフレームワーク)
+- Turbo Rails (ページ遷移高速化)
+- esbuild (JavaScriptバンドラー)
+
+**環境構築**
+- Docker
+
+**デプロイ**
+- Render
+
+
+### 5. 工夫した点・アピールポイント
+- 単語帳に問題と解答を入力することで、知識のインプットとアウトプットを簡単に行えるようにし、ランダム出題により記憶の定着率を向上させました。
+- フォルダ分け機能を導入し、学習内容を整理・管理しやすくしました。
+- 復習機能を導入し、間違えた問題に再度挑戦できることで知識を定着しやすくしました。
+- Tailwind CSS を用いて、シンプルでわかりやすいUIを実現しました。
+
+
+

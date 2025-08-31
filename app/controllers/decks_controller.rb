@@ -2,7 +2,7 @@ class DecksController < ApplicationController
   before_action :set_deck, only: %i[show edit update destroy]
 
   def index
-    @decks = current_user.decks.all.includes(:cards)
+    @decks = Deck.all.includes(:cards)
   end
 
   def show
@@ -11,7 +11,7 @@ class DecksController < ApplicationController
   end
 
   def new
-    @deck = current_user.decks.new
+    @deck = Deck.new
   end
 
   def edit
@@ -19,7 +19,7 @@ class DecksController < ApplicationController
   end
 
   def create
-    @deck = current_user.decks.new(deck_params)
+    @deck = current_user.decks.build(deck_params)
 
     if @deck.save
       redirect_to @deck, notice: t(".success")

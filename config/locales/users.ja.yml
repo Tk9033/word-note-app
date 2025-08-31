@@ -1,0 +1,6 @@
+ja:
+  users:
+    new:
+      title: "サインアップ"
+      submit: "登録する"
+      back_to_login: "ログインへ戻る"

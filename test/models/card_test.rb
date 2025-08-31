@@ -2,26 +2,32 @@ require "test_helper"
 
 class CardTest < ActiveSupport::TestCase
   def setup
-    @deck = decks(:one)
-    @card = @deck.cards.build(question: "What is Rails?", answer: "A web framework.")
+    @user = User.create!(
+      email: "cardtest@example.com",
+      password: "password",
+      password_confirmation: "password",
+      name: "Card Tester"
+    )
+    @deck = Deck.create!(name: "DeckForCardTest-#{SecureRandom.hex(4)}", user: @user)
+    @card = @deck.cards.build(question: "Q1", answer: "A1")
   end
 
   test "should be valid" do
     assert @card.valid?
   end
 
-  test "deck id should be present" do
-    @card.deck_id = nil
+  test "deck_id should be present" do
+    @card.deck = nil
     assert_not @card.valid?
   end
 
   test "question should be present" do
-    @card.question = "   "
+    @card.question = " "
     assert_not @card.valid?
   end
 
   test "answer should be present" do
-    @card.answer = "   "
+    @card.answer = " "
     assert_not @card.valid?
   end
 end

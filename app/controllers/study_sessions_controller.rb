@@ -45,17 +45,17 @@ class StudySessionsController < ApplicationController
 
   # 結果表示
   def result
-    @total = @session.card_order.size
-    results_relation = @session.study_results
+  results = @session.study_results.includes(:card)
 
-    @answered = results_relation.count
-    @correct_count = results_relation.where(correct: true).count
-    @wrong_results = results_relation.where(correct: false).includes(:card)
+  @total         = @session.card_order.size
+  @answered      = results.size
+  @correct_count = results.where(correct: true).count
+  @wrong_results = results.where(correct: false).to_a
 
-    if @session.finished? && @correct_count == @total && @total.positive?
-      flash.now[:notice] = t(".all_correct")
-    end
+  if @session.finished? && @correct_count == @total && @total.positive?
+    flash.now[:notice] = t(".all_correct")
   end
+end
 
   # 不正解だけで新しく問題を作成
   def retry_wrong
