@@ -1,6 +1,6 @@
 ja:
   activemodel:
-    model:
+    models:
       login_form: ログイン
       sign_up_form: サインアップ
     attributes:
@@ -19,3 +19,5 @@ ja:
           attributes:
             password_confirmation:
               confirmation: "と一致しません"
+            email:
+              invalid: "はメールアドレスの形式が正しくありません"

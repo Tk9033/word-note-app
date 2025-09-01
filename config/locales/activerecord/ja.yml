@@ -15,6 +15,10 @@ ja:
           attributes:
             question:
               taken: "この問題はすでに登録されています"
+        user:
+          attributes:
+            email:
+              invalid: "はメールアドレスの形式が正しくありません"
   errors:
     format: "%{attribute}%{message}"
     messages:
