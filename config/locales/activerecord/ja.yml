@@ -9,6 +9,8 @@ ja:
       card:
         question: 問題
         answer: 答え
+      user:
+        email: メールアドレス
     errors:
       models:
         card:
