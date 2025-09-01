@@ -20,4 +20,4 @@ ja:
             password_confirmation:
               confirmation: "と一致しません"
             email:
-              invalid: "はメールアドレスの形式が正しくありません"
+              invalid: "の形式が正しくありません"
